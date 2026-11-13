@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "mathisarends",
   "license": "MIT",
-  "description": "A distraction-free Spotify remote in the Omarchy bar: play, skip, volume, devices, playlists and favorites, powered by the spoti CLI.",
+  "description": "A distraction-free Spotify remote in the Omarchy bar: play, skip, volume, devices and playlists, powered by the spoti CLI.",
   "kinds": ["bar-widget"],
   "activation": "on-demand",
   "entryPoints": {
@@ -13,7 +13,7 @@
   },
   "barWidget": {
     "displayName": "Spotify",
-    "description": "One icon in the bar. Click for a keyboard-first panel: what is playing, transport and volume, the device it plays on, your favorites and a searchable list of your playlists.",
+    "description": "One icon in the bar. Click for a keyboard-first panel: what is playing, transport and volume, the device it plays on and a searchable list of your playlists.",
     "category": "Media",
     "aliases": ["spotify", "music", "player"],
     "defaultSection": "right",
@@ -25,7 +25,6 @@
       "showTrack": false,
       "trackLength": 32,
       "showHints": true,
-      "favoritesFile": "",
       "spoti": "spoti",
       "keys": {}
     },
@@ -36,7 +35,6 @@
       { "key": "showTrack", "type": "boolean", "label": "Show the track in the bar", "defaultValue": false, "description": "Title and artist next to the icon while something plays." },
       { "key": "trackLength", "type": "integer", "label": "Track text length", "min": 8, "max": 80, "step": 1, "defaultValue": 32, "description": "Longer bar text is cut with an ellipsis." },
       { "key": "showHints", "type": "boolean", "label": "Show key hints", "defaultValue": true, "description": "The short shortcut line at the bottom of the panel." },
-      { "key": "favoritesFile", "type": "path", "label": "Favorites file", "defaultValue": "", "description": "Defaults to ~/.config/omarchy/spotify/favorites.conf." },
       { "key": "spoti", "type": "string", "label": "spoti command", "defaultValue": "spoti", "description": "Name or full path of the spoti binary." }
     ]
   }

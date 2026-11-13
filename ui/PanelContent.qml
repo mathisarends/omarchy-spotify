@@ -21,9 +21,6 @@ SpotifyKeys {
   onActionRequested: function(action) {
     content.perform(action)
   }
-  onFavoriteRequested: function(index) {
-    content.widget.runFavorite(index)
-  }
   onCloseRequested: content.widget.close()
   onTabRequested: function(direction) {
     content.widget.switchPanel(direction)
@@ -78,9 +75,6 @@ SpotifyKeys {
     case "search":
       startSearch()
       break
-    case "toggleFavorite":
-      toggleFavoriteAtCursor()
-      break
     case "devices":
       widget.toggleDevices()
       cursor.active = true
@@ -88,9 +82,6 @@ SpotifyKeys {
       break
     case "refresh":
       client.refreshAll(true)
-      break
-    case "editFavorites":
-      widget.editFavorites()
       break
     case "close":
       widget.close()
@@ -150,29 +141,12 @@ SpotifyKeys {
     case "speaker":
       widget.setUpSpeaker()
       break
-    case "fav":
-      widget.runFavorite(stop.index)
-      break
-    case "favedit":
-      widget.editFavorites()
-      break
     case "pl":
       widget.playRow(widget.visibleRows[stop.index])
       break
     }
   }
 
-  function toggleFavoriteAtCursor() {
-    const stop = Spotify.parseStop(cursor.current)
-    if (stop.type === "pl") {
-      widget.toggleFavoriteRow(widget.visibleRows[stop.index])
-    } else if (stop.type === "fav") {
-      const favorite = widget.favorites.entries[stop.index]
-      if (favorite) {
-        widget.favorites.toggle(favorite.label, favorite.target)
-      }
-    }
-  }
 
   // ---- Search ----
 
@@ -263,11 +237,6 @@ SpotifyKeys {
       }
 
       DeviceSection {
-        widget: content.widget
-        visible: content.client.connected
-      }
-
-      FavoritesSection {
         widget: content.widget
         visible: content.client.connected
       }

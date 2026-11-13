@@ -6,6 +6,7 @@ import {
   statusForExit,
 } from "../src/spoti.ts"
 import type { Playlist } from "../src/spoti.ts"
+import { uriFromReference } from "../src/input.ts"
 
 const DEVICE = { id: "abc123", name: "Kitchen", type: "Speaker", is_active: true, is_restricted: false, volume_percent: 40 }
 
@@ -156,5 +157,18 @@ describe("errors", () => {
     assert.equal(errorText({ reason: "premium_required", message: "403" }, messages), "Premium")
     assert.equal(errorText({ reason: "other", message: "raw" }, messages), "raw")
     assert.equal(errorText({ reason: "", message: "" }, messages), "Oops")
+  })
+})
+
+describe("uriFromReference", () => {
+  it("accepts URIs and links", () => {
+    assert.equal(uriFromReference("spotify:track:abc"), "spotify:track:abc")
+    assert.equal(uriFromReference("https://open.spotify.com/intl-de/album/xyz?si=1"), "spotify:album:xyz")
+  })
+
+  it("rejects everything else", () => {
+    assert.equal(uriFromReference("spotify:user:x:collection"), "")
+    assert.equal(uriFromReference("https://open.spotify.com.evil.com/album/x"), "")
+    assert.equal(uriFromReference("http://open.spotify.com/album/x"), "")
   })
 })

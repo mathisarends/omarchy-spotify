@@ -39,11 +39,7 @@
   "devices.loading": "Suche Geräte",
   "devices.empty": "Kein Gerät online. Öffne Spotify auf einem Gerät oder drücke Enter, um diesen Rechner mit spotifyd zum Lautsprecher zu machen.",
 
-  "section.favorites": "Favoriten",
   "section.playlists": "Playlists",
-  "favorites.edit": "Favoriten bearbeiten",
-  "favorites.empty": "Noch keine Favoriten. Drücke f auf einer Playlist oder Enter hier, um die Datei zu bearbeiten.",
-  "favorites.noneInFile": "Die Favoritendatei hat keine Einträge. Drücke Enter, um sie zu bearbeiten.",
 
   "search.placeholder": "/ zum Suchen",
   "search.typing": "Tippen zum Filtern, Enter zum Abspielen",
@@ -59,5 +55,5 @@
   "hint.play": "abspielen",
   "hint.pause": "Pause",
   "hint.search": "suchen",
-  "hint.favorite": "Favorit"
+  "hint.devices": "Geräte"
 }

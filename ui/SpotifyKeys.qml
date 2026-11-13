@@ -15,7 +15,6 @@ Item {
   property string query: ""
 
   signal actionRequested(string action)
-  signal favoriteRequested(int index)
   signal closeRequested()
   signal tabRequested(int direction)
   // Leave the search line; `clear` also forgets what was typed.
@@ -93,9 +92,6 @@ Item {
     const result = Spotify.lookupKey(keys.keymap, Spotify.keyOfEvent(event.key, event.text, event.modifiers))
     if (result.type === "action") {
       keys.actionRequested(keys.mirrored(result.action))
-      event.accepted = true
-    } else if (result.type === "favorite") {
-      keys.favoriteRequested(result.index)
       event.accepted = true
     }
   }

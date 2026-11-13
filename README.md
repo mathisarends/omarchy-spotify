@@ -7,7 +7,6 @@ a shortcut), hit a key, and music plays, without opening Spotify.
 - What is playing, as text: title and artist, nothing else
 - The device it plays on, and switching to another one
 - Your playlists and liked songs, filtered as you type
-- Favorites on the number keys
 - Keyboard first, with global shortcuts over IPC
 
 No cover art, recommendations, social features or browsing.
@@ -92,10 +91,7 @@ Open the panel, then:
 | `/` | search your playlists; type, then `Enter` plays the best match |
 | `j` / `k`, arrows | move |
 | `Enter` | play the playlist, run the button, or pick the device under the cursor |
-| `f` | add or remove the playlist under the cursor as a favorite |
-| `1`–`9` | play a favorite |
 | `d` | open the device list |
-| `e` | edit the favorites file |
 | `r` | reload playlists and devices |
 | `q`, `Esc` | close |
 
@@ -112,7 +108,6 @@ While searching:
 With the mouse:
 
 - **Bar icon:** left click opens the panel, right click plays/pauses, middle click skips, and the scroll wheel changes the volume.
-- **Playlist row:** right click toggles it as a favorite.
 
 ### Changing keys
 
@@ -126,8 +121,7 @@ keys separated by spaces.
   "id": "mathisarends.spotify",
   "keys": {
     "playPause": "Space ctrl+p",
-    "search": "/ ctrl+f",
-    "favorites": "1 2 3 4"
+    "search": "/ ctrl+f"
   }
 }
 ```
@@ -148,12 +142,9 @@ keys separated by spaces.
 | `volumeDown` | `-` |
 | `shuffle` | `s` |
 | `search` | `/` |
-| `toggleFavorite` | `f` |
 | `devices` | `d` |
 | `refresh` | `r` |
-| `editFavorites` | `e` |
 | `close` | `q` |
-| `favorites` | `1 2 3 4 5 6 7 8 9` (one key per favorite, in order) |
 
 Key names:
 - Any single character.
@@ -177,7 +168,7 @@ o.bind("SUPER + ALT + RIGHT", "Next track", "omarchy-shell mathisarends.spotify 
 o.bind("SUPER + ALT + LEFT", "Previous track", "omarchy-shell mathisarends.spotify previous")
 o.bind("SUPER + ALT + UP", "Louder", "omarchy-shell mathisarends.spotify volumeUp 10")
 o.bind("SUPER + ALT + DOWN", "Quieter", "omarchy-shell mathisarends.spotify volumeDown 10")
-o.bind("SUPER + ALT + F", "Focus music", "omarchy-shell mathisarends.spotify favorite Focus")
+o.bind("SUPER + ALT + F", "Focus music", "omarchy-shell mathisarends.spotify playlist 'Deep Focus'")
 ```
 
 | Method | What it does |
@@ -190,7 +181,6 @@ o.bind("SUPER + ALT + F", "Focus music", "omarchy-shell mathisarends.spotify fav
 | `volume <n>` | set the volume |
 | `playlist <name\|uri\|link>` | play one of your playlists by name, or any Spotify URI or link |
 | `liked` | play your liked songs |
-| `favorite <label>` | play a favorite by its label |
 | `device <name>` | move playback to a device (id, name, or a unique part of it) |
 | `refresh` | read everything from Spotify again |
 | `nowPlaying` | `Title — Artist`, for scripts |
@@ -198,28 +188,6 @@ o.bind("SUPER + ALT + F", "Focus music", "omarchy-shell mathisarends.spotify fav
 
 Use the plain command form shown above. The `{ ipc = "…" }` shorthand splits at
 the first dot, which doesn't fit this plugin's id.
-
-## Favorites
-
-Favorites live in `~/.config/omarchy/spotify/favorites.conf`.
-- Press `f` on a playlist in the panel to add or remove it.
-- Press `e` to open the file. It is created with examples the first time.
-- Saving the file updates the panel immediately.
-
-```ini
-# Label = what to play   (add --shuffle to start shuffled)
-Focus     = spotify:playlist:37i9dQZF1DWZeKCadgRdKQ
-Running   = https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP --shuffle
-Road trip = Road Trip
-Liked     = liked --shuffle
-```
-
-What to play can be:
-- a Spotify URI or `open.spotify.com` link (a playlist, album, artist, show or track);
-- the name of one of your playlists;
-- `liked`.
-
-The first nine favorites get the keys `1` to `9`.
 
 ## Settings
 
@@ -234,7 +202,6 @@ bar settings UI.
 | `showTrack` | `false` | Title and artist next to the bar icon |
 | `trackLength` | `32` | Longest bar text before it is cut |
 | `showHints` | `true` | The key hint line in the panel |
-| `favoritesFile` | `""` | Defaults to `~/.config/omarchy/spotify/favorites.conf` |
 | `spoti` | `"spoti"` | Name or full path of the spoti binary |
 | `keys` | `{}` | See [Changing keys](#changing-keys) |
 

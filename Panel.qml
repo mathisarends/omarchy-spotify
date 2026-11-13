@@ -30,18 +30,6 @@ Panel {
   readonly property int trackLength: Util.clamp(Math.round(Number(setting("trackLength", 32)) || 32), 8, 80)
   readonly property bool showHints: setting("showHints", true) !== false
   readonly property var keymap: Spotify.parseKeymap(setting("keys", null))
-  readonly property string favoritesPath: expandHome(String(setting("favoritesFile", "") || "").trim())
-    || configHome + "/omarchy/spotify/favorites.conf"
-
-  readonly property string homeDir: Quickshell.env("HOME") || ""
-  readonly property string configHome: Quickshell.env("XDG_CONFIG_HOME") || homeDir + "/.config"
-
-  function expandHome(path) {
-    if (path === "~" || path.startsWith("~/")) {
-      return homeDir + path.slice(1)
-    }
-    return path
-  }
 
   // ---- Theme ----
 
@@ -72,7 +60,6 @@ Panel {
   // ---- Parts ----
 
   readonly property var client: spotifyClient
-  readonly property var favorites: favoritesFile
   readonly property var cursor: panelCursor
 
   Leadership {
@@ -98,12 +85,6 @@ Panel {
     onDeviceNeeded: root.devicesOpen = true
   }
 
-  FavoritesFile {
-    id: favoritesFile
-    path: root.favoritesPath
-    onEditorOpened: root.close()
-  }
-
   // ---- The playlist list and its search ----
 
   property string query: ""
@@ -121,7 +102,6 @@ Panel {
       statusActions: root.setupActions.length,
       devicesOpen: root.devicesOpen,
       devices: spotifyClient.devices.length,
-      favorites: favoritesFile.entries.length,
       playlists: root.visibleRows.length,
     })
   }
@@ -133,12 +113,6 @@ Panel {
 
   // ---- Actions shared by keys, mouse and IPC ----
 
-  function runFavorite(index) {
-    const favorite = favoritesFile.entries[index]
-    if (favorite) {
-      spotifyClient.playTarget(favorite.target, favorite.shuffle)
-    }
-  }
 
   function playRow(row) {
     if (row) {
@@ -146,11 +120,6 @@ Panel {
     }
   }
 
-  function toggleFavoriteRow(row) {
-    if (row) {
-      favoritesFile.toggle(row.name, row.target)
-    }
-  }
 
   /** One of the transport buttons, by index into Spotify.TRANSPORT. */
   function runTransport(index) {
@@ -170,9 +139,6 @@ Panel {
     }
   }
 
-  function editFavorites() {
-    favoritesFile.edit()
-  }
 
   function toggleDevices() {
     devicesOpen = !devicesOpen
@@ -316,7 +282,6 @@ Panel {
       return
     }
     spotifyClient.refreshAll(false)
-    favoritesFile.reload()
     panelCursor.reset("transport:1")
   }
 

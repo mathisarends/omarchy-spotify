@@ -7,10 +7,9 @@
 //   device         the "playing on" row; opens the device list
 //   dev:<i>        a device in the open list
 //   speaker        "set up this computer" when the open list is empty
-//   fav:<i>        a favorite, or favedit when there are none
 //   pl:<i>         a row of the (filtered) playlist list
 
-export type StopType = "status" | "transport" | "volume" | "device" | "dev" | "speaker" | "fav" | "favedit" | "pl" | ""
+export type StopType = "status" | "transport" | "volume" | "device" | "dev" | "speaker" | "pl" | ""
 
 export interface Stop {
   type: StopType
@@ -24,7 +23,6 @@ export interface PanelLayout {
   statusActions: number
   devicesOpen: boolean
   devices: number
-  favorites: number
   playlists: number
 }
 
@@ -49,7 +47,6 @@ export function cursorStops(layout: PanelLayout): string[] {
     "volume",
     "device",
     ...deviceStops(layout),
-    ...(layout.favorites > 0 ? range("fav", layout.favorites) : ["favedit"]),
     ...range("pl", layout.playlists),
   ]
 }
@@ -60,13 +57,11 @@ export function parseStop(stop: string): Stop {
     case "status":
     case "transport":
     case "dev":
-    case "fav":
     case "pl":
       return { type, index: Number(index) }
     case "volume":
     case "device":
     case "speaker":
-    case "favedit":
       return { type, index: -1 }
     default:
       return { type: "", index: -1 }
@@ -99,10 +94,10 @@ export function stepStop(stops: string[], current: string, delta: number, within
   return list[Math.max(0, Math.min(list.length - 1, index + delta))]
 }
 
-/** h/l along a row of buttons (transport, favorites, setup); stays put at the ends. */
+/** h/l along a row of buttons (transport, setup); stays put at the ends. */
 export function sideStop(stops: string[], current: string, delta: number): string {
   const { type, index } = parseStop(current)
-  if (type !== "transport" && type !== "fav" && type !== "status") {
+  if (type !== "transport" && type !== "status") {
     return current
   }
   const next = `${type}:${index + delta}`

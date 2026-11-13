@@ -103,14 +103,6 @@ ShellIpc {
     return playlist(Spotify.LIKED)
   }
 
-  function favorite(label: string): string {
-    const favorite = ipc.widget.favorites.find(label)
-    if (!favorite) {
-      return "unknown"
-    }
-    ipc.client.playTarget(favorite.target, favorite.shuffle)
-    return "ok"
-  }
 
   /** A device by id, name, or a unique part of its name (spoti matches it). */
   function device(name: string): string {

@@ -1,6 +1,6 @@
 // Panel shortcuts. Every action can be rebound in the widget's settings:
 //
-//   "keys": { "down": "j Down", "playPause": "Space ctrl+p", "favorites": "1 2 3" }
+//   "keys": { "down": "j Down", "playPause": "Space ctrl+p" }
 //
 // A binding is a list of keys separated by spaces. A key is a single
 // character ("j", "A", "?") or a named key ("Down", "Space", "F5"), with
@@ -14,13 +14,9 @@ export type Action =
   | "down" | "up" | "left" | "right" | "first" | "last"
   | "activate" | "playPause" | "next" | "previous"
   | "volumeUp" | "volumeDown" | "shuffle"
-  | "search" | "toggleFavorite" | "devices"
-  | "refresh" | "editFavorites" | "close"
+  | "search" | "devices" | "refresh" | "close"
 
-/** "favorites" is special: its n-th key runs the n-th favorite. */
-export type Binding = Action | "favorites"
-
-export const DEFAULT_KEYS: Readonly<Record<Binding, string>> = {
+export const DEFAULT_KEYS: Readonly<Record<Action, string>> = {
   down: "j Down",
   up: "k Up",
   left: "h Left",
@@ -35,12 +31,9 @@ export const DEFAULT_KEYS: Readonly<Record<Binding, string>> = {
   volumeDown: "-",
   shuffle: "s",
   search: "/",
-  toggleFavorite: "f",
   devices: "d",
   refresh: "r",
-  editFavorites: "e",
   close: "q",
-  favorites: "1 2 3 4 5 6 7 8 9",
 }
 
 export const MAX_KEYS_PER_BINDING = 12
@@ -175,46 +168,31 @@ export function parseBinding(value: unknown): string[] {
 export interface Keymap {
   /** Canonical key -> action. */
   actions: Record<string, Action>
-  /** Canonical key -> favorite index. */
-  favorites: Record<string, number>
 }
 
 /** Builds the keymap from the "keys" setting; actions left out keep their defaults. */
 export function parseKeymap(setting: unknown): Keymap {
   const custom = setting !== null && typeof setting === "object" ? setting as Record<string, unknown> : {}
-  const keysOf = (binding: Binding): string[] =>
-    parseBinding(hasKey(custom, binding) ? custom[binding] : DEFAULT_KEYS[binding])
+  const keysOf = (action: Action): string[] =>
+    parseBinding(hasKey(custom, action) ? custom[action] : DEFAULT_KEYS[action])
 
-  const keymap: Keymap = { actions: {}, favorites: {} }
-  for (const binding of Object.keys(DEFAULT_KEYS) as Binding[]) {
-    if (binding === "favorites") {
-      continue
-    }
-    for (const key of keysOf(binding)) {
+  const keymap: Keymap = { actions: {} }
+  for (const action of Object.keys(DEFAULT_KEYS) as Action[]) {
+    for (const key of keysOf(action)) {
       // When two actions claim a key, the first one keeps it.
-      keymap.actions[key] ??= binding
+      keymap.actions[key] ??= action
     }
   }
-  keysOf("favorites").forEach((key, index) => {
-    // An action wins over a favorite slot on the same key.
-    if (!hasKey(keymap.actions, key)) {
-      keymap.favorites[key] = index
-    }
-  })
   return keymap
 }
 
 export type KeyResult =
   | { type: "action"; action: Action }
-  | { type: "favorite"; index: number }
   | { type: "none" }
 
 export function lookupKey(keymap: Keymap, key: string): KeyResult {
   if (hasKey(keymap.actions, key)) {
     return { type: "action", action: keymap.actions[key] }
-  }
-  if (hasKey(keymap.favorites, key)) {
-    return { type: "favorite", index: keymap.favorites[key] }
   }
   return { type: "none" }
 }
@@ -242,7 +220,7 @@ const HINTS: readonly (readonly [readonly Action[], string])[] = [
   [["activate"], "hint.play"],
   [["playPause"], "hint.pause"],
   [["search"], "hint.search"],
-  [["toggleFavorite"], "hint.favorite"],
+  [["devices"], "hint.devices"],
 ]
 
 /** The hint line at the bottom of the panel; actions without a key are left out. */
@@ -255,8 +233,3 @@ export function keyHints(keymap: Keymap): KeyHint[] {
     .filter((hint) => hint.keys !== "")
 }
 
-/** The key that runs a favorite, written for people, or "". */
-export function favoriteKeyLabel(keymap: Keymap, index: number): string {
-  const key = Object.keys(keymap.favorites).find((candidate) => keymap.favorites[candidate] === index) ?? ""
-  return key.length === 1 ? key : ""
-}

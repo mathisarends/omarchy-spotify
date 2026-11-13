@@ -29,7 +29,7 @@ export interface Command {
   args: string[]
 }
 
-/** What a favorite or a playlist row plays. */
+/** What a playlist row or an IPC call plays. */
 export type PlayTarget =
   | { kind: "uri"; uri: string }
   | { kind: "uris"; uris: string[] }

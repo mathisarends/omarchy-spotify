@@ -181,20 +181,13 @@ Column {
         MouseArea {
           anchors.fill: parent
           hoverEnabled: true
-          acceptedButtons: Qt.LeftButton | Qt.RightButton
           cursorShape: Qt.PointingHandCursor
           onContainsMouseChanged: {
             if (containsMouse) {
               section.widget.cursor.hover(row.stopId)
             }
           }
-          onClicked: function(mouse) {
-            if (mouse.button === Qt.RightButton) {
-              section.widget.toggleFavoriteRow(row.modelData)
-            } else {
-              section.widget.playRow(row.modelData)
-            }
-          }
+          onClicked: section.widget.playRow(row.modelData)
         }
 
         SpotifyText {
@@ -216,8 +209,8 @@ Column {
           spacing: Style.space(1)
           anchors.left: rowIcon.right
           anchors.leftMargin: Style.space(10)
-          anchors.right: star.left
-          anchors.rightMargin: Style.space(6)
+          anchors.right: parent.right
+          anchors.rightMargin: Style.space(8)
           anchors.verticalCenter: parent.verticalCenter
 
           SpotifyText {
@@ -237,17 +230,6 @@ Column {
             elide: Text.ElideRight
             width: parent.width
           }
-        }
-
-        SpotifyText {
-          id: star
-          widget: section.widget
-          text: section.widget.favorites.has(row.modelData.target) ? Spotify.Glyph.star : ""
-          width: Style.space(18)
-          horizontalAlignment: Text.AlignHCenter
-          anchors.right: parent.right
-          anchors.rightMargin: Style.space(8)
-          anchors.verticalCenter: parent.verticalCenter
         }
       }
     }

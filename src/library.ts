@@ -2,9 +2,10 @@
 // playlist you own or follow, in Spotify's order.
 
 import type { PlayTarget } from "./commands.ts"
-import { LIKED } from "./favorites.ts"
-import type { Favorite } from "./favorites.ts"
 import type { Playlist } from "./spoti.ts"
+
+/** The target of the liked songs row. */
+export const LIKED = "liked"
 
 export interface LibraryRow {
   /** A playlist URI, or LIKED. */
@@ -39,7 +40,7 @@ export function findPlaylist(playlists: Playlist[], name: string): Playlist | nu
 }
 
 /**
- * What a favorite, a row or an IPC argument plays. A name becomes the URI of
+ * What a row or an IPC argument plays. A name becomes the URI of
  * your playlist with that name when it is loaded; spoti looks it up
  * otherwise. LIKED is handled by the caller, since it needs a lookup first.
  */
@@ -51,11 +52,3 @@ export function playTarget(target: string, playlists: Playlist[]): PlayTarget {
   return playlist ? { kind: "uri", uri: playlist.uri } : { kind: "name", name: target }
 }
 
-/** Favorite targets as a set, to mark rows with a star. */
-export function favoriteTargets(favorites: Favorite[]): Record<string, boolean> {
-  const targets: Record<string, boolean> = {}
-  for (const favorite of favorites) {
-    targets[favorite.target] = true
-  }
-  return targets
-}

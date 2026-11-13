@@ -39,11 +39,7 @@
   "devices.loading": "Looking for devices",
   "devices.empty": "No device online. Open Spotify on any device, or press Enter to turn this computer into a speaker with spotifyd.",
 
-  "section.favorites": "Favorites",
   "section.playlists": "Playlists",
-  "favorites.edit": "Edit favorites",
-  "favorites.empty": "No favorites yet. Press f on a playlist, or Enter here to edit the file.",
-  "favorites.noneInFile": "The favorites file has no entries. Press Enter to edit it.",
 
   "search.placeholder": "Press / to search",
   "search.typing": "Type to filter, Enter to play",
@@ -59,5 +55,5 @@
   "hint.play": "play",
   "hint.pause": "pause",
   "hint.search": "search",
-  "hint.favorite": "favorite"
+  "hint.devices": "devices"
 }

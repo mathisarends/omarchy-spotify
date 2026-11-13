@@ -5,9 +5,8 @@ import assert from "node:assert/strict"
 import { describe, it } from "node:test"
 
 import { clampStop, cursorStops, parseStop, sideStop, stepStop } from "../src/cursor.ts"
-import { LIKED, parseFavorites } from "../src/favorites.ts"
 import { filterByName, foldText } from "../src/filter.ts"
-import { favoriteTargets, findPlaylist, libraryRows, playTarget } from "../src/library.ts"
+import { LIKED, findPlaylist, libraryRows, playTarget } from "../src/library.ts"
 import { formatTime, liveState, nextPollMs, nudgedVolume, progressAt, withOverride } from "../src/overrides.ts"
 import { emptyPlayback } from "../src/spoti.ts"
 import type { Playlist } from "../src/spoti.ts"
@@ -34,11 +33,11 @@ describe("filterByName", () => {
 })
 
 describe("cursor", () => {
-  const layout = { connected: true, statusActions: 0, devicesOpen: false, devices: 2, favorites: 0, playlists: 2 }
+  const layout = { connected: true, statusActions: 0, devicesOpen: false, devices: 2, playlists: 2 }
 
   it("lists the stops top to bottom", () => {
     assert.deepEqual(cursorStops(layout), [
-      "transport:0", "transport:1", "transport:2", "transport:3", "volume", "device", "favedit", "pl:0", "pl:1",
+      "transport:0", "transport:1", "transport:2", "transport:3", "volume", "device", "pl:0", "pl:1",
     ])
     assert.deepEqual(cursorStops({ ...layout, devicesOpen: true }).slice(5, 8), ["device", "dev:0", "dev:1"])
     assert.deepEqual(cursorStops({ ...layout, devicesOpen: true, devices: 0 }).slice(5, 7), ["device", "speaker"])
@@ -60,7 +59,7 @@ describe("cursor", () => {
 
   it("steps within a kind and sideways along rows", () => {
     const stops = cursorStops(layout)
-    assert.equal(stepStop(stops, "device", 1), "favedit")
+    assert.equal(stepStop(stops, "device", 1), "pl:0")
     assert.equal(stepStop(stops, "pl:1", 1), "pl:1")
     assert.equal(stepStop(stops, "pl:0", -1, "pl"), "pl:0")
     assert.equal(stepStop(stops, "volume", 1, "pl"), "pl:0")
@@ -88,9 +87,6 @@ describe("library", () => {
     assert.deepEqual(playTarget("Unknown", playlists), { kind: "name", name: "Unknown" })
   })
 
-  it("marks favorite targets", () => {
-    assert.deepEqual(favoriteTargets(parseFavorites("A = spotify:playlist:a\nB = liked\n")), { "spotify:playlist:a": true, liked: true })
-  })
 })
 
 describe("optimistic state", () => {

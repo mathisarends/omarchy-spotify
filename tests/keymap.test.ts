@@ -2,7 +2,7 @@ import assert from "node:assert/strict"
 import { describe, it } from "node:test"
 
 import {
-  DEFAULT_KEYS, favoriteKeyLabel, keyHints, keyLabel, keyOfEvent, lookupKey, normalizeKey, parseBinding, parseKeymap,
+  DEFAULT_KEYS, keyHints, keyLabel, keyOfEvent, lookupKey, normalizeKey, parseBinding, parseKeymap,
 } from "../src/keymap.ts"
 
 const CTRL = 0x04000000
@@ -93,27 +93,26 @@ describe("parseKeymap", () => {
     assert.deepEqual(lookupKey(keymap, "j"), { type: "action", action: "down" })
     assert.deepEqual(lookupKey(keymap, "Down"), { type: "action", action: "down" })
     assert.deepEqual(lookupKey(keymap, "s"), { type: "action", action: "shuffle" })
-    assert.deepEqual(lookupKey(keymap, "3"), { type: "favorite", index: 2 })
     assert.deepEqual(lookupKey(keymap, "z"), { type: "none" })
   })
 
   it("replaces only the actions it names", () => {
-    const keymap = parseKeymap({ down: "x", editFavorites: "ctrl+o" })
+    const keymap = parseKeymap({ down: "x", refresh: "ctrl+o" })
     assert.deepEqual(lookupKey(keymap, "x"), { type: "action", action: "down" })
     assert.deepEqual(lookupKey(keymap, "j"), { type: "none" })
-    assert.deepEqual(lookupKey(keymap, "ctrl+o"), { type: "action", action: "editFavorites" })
+    assert.deepEqual(lookupKey(keymap, "ctrl+o"), { type: "action", action: "refresh" })
     assert.deepEqual(lookupKey(keymap, "k"), { type: "action", action: "up" })
   })
 
   it("lets an empty binding turn an action off", () => {
-    assert.deepEqual(lookupKey(parseKeymap({ editFavorites: "" }), "e"), { type: "none" })
+    assert.deepEqual(lookupKey(parseKeymap({ refresh: "" }), "r"), { type: "none" })
   })
 
-  it("gives a contested key to the first action and keeps actions over favorites", () => {
-    const keymap = parseKeymap({ up: "j", favorites: "e x 1" })
+  it("gives a contested key to the first action", () => {
+    const keymap = parseKeymap({ up: "j", close: "q d" })
     assert.deepEqual(lookupKey(keymap, "j"), { type: "action", action: "down" })
-    assert.deepEqual(lookupKey(keymap, "e"), { type: "action", action: "editFavorites" })
-    assert.deepEqual(lookupKey(keymap, "1"), { type: "favorite", index: 2 })
+    assert.deepEqual(lookupKey(keymap, "d"), { type: "action", action: "devices" })
+    assert.deepEqual(lookupKey(keymap, "1"), { type: "none" })
   })
 
   it("survives settings that are not an object", () => {
@@ -130,26 +129,20 @@ describe("parseKeymap", () => {
 
 describe("labels", () => {
   it("shows the first key of an action", () => {
-    const keymap = parseKeymap({ editFavorites: "ctrl+shift+Down e" })
+    const keymap = parseKeymap({ refresh: "ctrl+shift+Down r" })
     assert.equal(keyLabel(keymap, "down"), "j")
-    assert.equal(keyLabel(keymap, "editFavorites"), "Ctrl+Shift+Down")
+    assert.equal(keyLabel(keymap, "refresh"), "Ctrl+Shift+Down")
     assert.equal(keyLabel(parseKeymap({ refresh: "" }), "refresh"), "")
     assert.equal(keyLabel(keymap, "activate"), "Enter")
     assert.equal(keyLabel(parseKeymap({ volumeUp: "ctrl++" }), "volumeUp"), "Ctrl++")
   })
 
   it("lists hints for bound actions only", () => {
-    assert.deepEqual(keyHints(parseKeymap({ playPause: "", search: "", toggleFavorite: "f" })), [
+    assert.deepEqual(keyHints(parseKeymap({ playPause: "", search: "" })), [
       { keys: "j/k", label: "hint.move" },
       { keys: "Enter", label: "hint.play" },
-      { keys: "f", label: "hint.favorite" },
+      { keys: "d", label: "hint.devices" },
     ])
   })
 
-  it("shows single-character favorite keys only", () => {
-    const keymap = parseKeymap({ favorites: "1 F2" })
-    assert.equal(favoriteKeyLabel(keymap, 0), "1")
-    assert.equal(favoriteKeyLabel(keymap, 1), "")
-    assert.equal(favoriteKeyLabel(keymap, 5), "")
-  })
 })
