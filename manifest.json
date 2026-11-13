@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "mathisarends.spotify",
+  "name": "Spotify",
+  "version": "0.1.0",
+  "author": "mathisarends",
+  "license": "MIT",
+  "description": "A distraction-free Spotify remote in the Omarchy bar: play, skip, volume, devices, playlists and favorites, powered by the spoti CLI.",
+  "kinds": ["bar-widget"],
+  "activation": "on-demand",
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Spotify",
+    "description": "One icon in the bar. Click for a keyboard-first panel: what is playing, transport and volume, the device it plays on, your favorites and a searchable list of your playlists.",
+    "category": "Media",
+    "aliases": ["spotify", "music", "player"],
+    "defaultSection": "right",
+    "allowMultiple": false,
+    "defaults": {
+      "device": "",
+      "step": 5,
+      "showLiked": true,
+      "showTrack": false,
+      "trackLength": 32,
+      "showHints": true,
+      "favoritesFile": "",
+      "spoti": "spoti",
+      "keys": {}
+    },
+    "schema": [
+      { "key": "device", "type": "string", "label": "Preferred device", "defaultValue": "", "description": "Name or id of the device to start playback on when nothing is active, for example the spotifyd speaker. Empty lets spoti pick the only one online." },
+      { "key": "step", "type": "integer", "label": "Volume step (%)", "min": 1, "max": 25, "step": 1, "defaultValue": 5, "description": "How far one scroll notch or one + / - press moves the volume." },
+      { "key": "showLiked", "type": "boolean", "label": "Show liked songs", "defaultValue": true, "description": "Liked songs as the first row of the playlist list." },
+      { "key": "showTrack", "type": "boolean", "label": "Show the track in the bar", "defaultValue": false, "description": "Title and artist next to the icon while something plays." },
+      { "key": "trackLength", "type": "integer", "label": "Track text length", "min": 8, "max": 80, "step": 1, "defaultValue": 32, "description": "Longer bar text is cut with an ellipsis." },
+      { "key": "showHints", "type": "boolean", "label": "Show key hints", "defaultValue": true, "description": "The short shortcut line at the bottom of the panel." },
+      { "key": "favoritesFile", "type": "path", "label": "Favorites file", "defaultValue": "", "description": "Defaults to ~/.config/omarchy/spotify/favorites.conf." },
+      { "key": "spoti", "type": "string", "label": "spoti command", "defaultValue": "spoti", "description": "Name or full path of the spoti binary." }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "Spotify",
+  "meta.loading": "Connecting",
+  "meta.nothing": "Nothing playing",
+  "meta.paused": "Paused",
+  "tooltip.paused": "Paused: %1",
+
+  "status.missing.title": "spoti is not installed",
+  "status.missing.detail": "This widget talks to Spotify through the spoti CLI. Install it and the panel picks it up on its own.",
+  "status.notConfigured.title": "Not connected to Spotify",
+  "status.notConfigured.detail": "Connect your Spotify account once in the terminal that opens. You need a free Spotify developer app; the script walks you through it.",
+  "status.unreachable.title": "Spotify not reachable",
+  "status.unreachable.detail": "Check your internet connection. The panel retries on its own.",
+  "status.error.title": "spoti ran into a problem",
+  "status.error.detail": "The message below comes straight from spoti.",
+
+  "action.install": "Install spoti",
+  "action.connect": "Connect Spotify",
+  "action.retry": "Try again",
+
+  "error.generic": "That did not work. Try again in a moment.",
+  "error.noDevice": "No active device. Pick one below or start Spotify somewhere.",
+  "error.premium": "Spotify only allows remote control with Premium.",
+  "error.rateLimited": "Spotify asked to slow down. Try again in a few seconds.",
+  "error.network": "Spotify is not reachable right now.",
+  "error.noLiked": "No liked songs to play.",
+
+  "transport.previous": "Previous",
+  "transport.play": "Play",
+  "transport.pause": "Pause",
+  "transport.next": "Next",
+  "transport.shuffle": "Shuffle",
+
+  "devices.playingOn": "Playing on",
+  "devices.pick": "Choose where to play",
+  "devices.none": "No active device",
+  "devices.active": "active",
+  "devices.restricted": "no remote control",
+  "devices.loading": "Looking for devices",
+  "devices.empty": "No device online. Open Spotify on any device, or press Enter to turn this computer into a speaker with spotifyd.",
+
+  "section.favorites": "Favorites",
+  "section.playlists": "Playlists",
+  "favorites.edit": "Edit favorites",
+  "favorites.empty": "No favorites yet. Press f on a playlist, or Enter here to edit the file.",
+  "favorites.noneInFile": "The favorites file has no entries. Press Enter to edit it.",
+
+  "search.placeholder": "Press / to search",
+  "search.typing": "Type to filter, Enter to play",
+
+  "library.liked": "Liked songs",
+  "library.likedDetail": "Your 50 most recent",
+  "library.tracks": { "one": "%1 track", "other": "%1 tracks" },
+  "library.loading": "Loading playlists",
+  "library.noMatch": "No playlist matches",
+  "library.empty": "No playlists yet",
+
+  "hint.move": "move",
+  "hint.play": "play",
+  "hint.pause": "pause",
+  "hint.search": "search",
+  "hint.favorite": "favorite"
+}

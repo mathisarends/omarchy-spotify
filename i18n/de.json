@@ -1,0 +1,63 @@
+{
+  "title": "Spotify",
+  "meta.loading": "Verbinde",
+  "meta.nothing": "Nichts läuft",
+  "meta.paused": "Pausiert",
+  "tooltip.paused": "Pausiert: %1",
+
+  "status.missing.title": "spoti ist nicht installiert",
+  "status.missing.detail": "Dieses Widget spricht über das spoti-CLI mit Spotify. Installiere es, das Panel erkennt es von selbst.",
+  "status.notConfigured.title": "Nicht mit Spotify verbunden",
+  "status.notConfigured.detail": "Verbinde dein Spotify-Konto einmalig im Terminal, das sich öffnet. Du brauchst eine kostenlose Spotify-Developer-App; das Skript führt dich hindurch.",
+  "status.unreachable.title": "Spotify nicht erreichbar",
+  "status.unreachable.detail": "Prüfe deine Internetverbindung. Das Panel versucht es selbst erneut.",
+  "status.error.title": "spoti hatte ein Problem",
+  "status.error.detail": "Die Meldung unten kommt direkt von spoti.",
+
+  "action.install": "spoti installieren",
+  "action.connect": "Spotify verbinden",
+  "action.retry": "Erneut versuchen",
+
+  "error.generic": "Das hat nicht geklappt. Versuch es gleich noch einmal.",
+  "error.noDevice": "Kein aktives Gerät. Wähle unten eins oder starte Spotify irgendwo.",
+  "error.premium": "Spotify erlaubt Fernsteuerung nur mit Premium.",
+  "error.rateLimited": "Spotify bittet um eine Pause. Versuch es in ein paar Sekunden.",
+  "error.network": "Spotify ist gerade nicht erreichbar.",
+  "error.noLiked": "Keine Lieblingssongs zum Abspielen.",
+
+  "transport.previous": "Zurück",
+  "transport.play": "Abspielen",
+  "transport.pause": "Pause",
+  "transport.next": "Weiter",
+  "transport.shuffle": "Zufall",
+
+  "devices.playingOn": "Spielt auf",
+  "devices.pick": "Wähle, wo gespielt wird",
+  "devices.none": "Kein aktives Gerät",
+  "devices.active": "aktiv",
+  "devices.restricted": "keine Fernsteuerung",
+  "devices.loading": "Suche Geräte",
+  "devices.empty": "Kein Gerät online. Öffne Spotify auf einem Gerät oder drücke Enter, um diesen Rechner mit spotifyd zum Lautsprecher zu machen.",
+
+  "section.favorites": "Favoriten",
+  "section.playlists": "Playlists",
+  "favorites.edit": "Favoriten bearbeiten",
+  "favorites.empty": "Noch keine Favoriten. Drücke f auf einer Playlist oder Enter hier, um die Datei zu bearbeiten.",
+  "favorites.noneInFile": "Die Favoritendatei hat keine Einträge. Drücke Enter, um sie zu bearbeiten.",
+
+  "search.placeholder": "/ zum Suchen",
+  "search.typing": "Tippen zum Filtern, Enter zum Abspielen",
+
+  "library.liked": "Lieblingssongs",
+  "library.likedDetail": "Deine letzten 50",
+  "library.tracks": { "one": "%1 Titel", "other": "%1 Titel" },
+  "library.loading": "Lade Playlists",
+  "library.noMatch": "Keine Playlist passt",
+  "library.empty": "Noch keine Playlists",
+
+  "hint.move": "bewegen",
+  "hint.play": "abspielen",
+  "hint.pause": "Pause",
+  "hint.search": "suchen",
+  "hint.favorite": "Favorit"
+}
